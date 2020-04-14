@@ -1,0 +1,27 @@
+<div class="extraMargin">
+  <div *ngIf="currentUser$ | async; else notLoggedIn">
+    <h3>Current Logged In User: {{ currentUser$ | async }}</h3>
+    <a href="" (click)="logout()">logout</a>
+    <span class="extraMargin">
+      <div class="newPostBtn" (click)="editPost()">New Post</div>
+    </span>
+  </div>
+  <ng-template #notLoggedIn>
+    <a routerLink="/login">login</a>
+  </ng-template>
+</div>
+<div class="extraMargin preview-grid" *ngFor="let blog of blogs$ | async">
+  <div class="previewImage"><img [src]="blog.previewImage" /></div>
+  <div>
+    <div>
+      <h3 class="headerText">{{ blog.header }}</h3>
+    </div>
+    <div>
+      <p class="subheaderText">{{ blog.subheader | slice: 0:400 }}...</p>
+    </div>
+    <div>
+      <div class="readBtn" (click)="readPost(blog.uid)">Read</div>
+      <div *ngIf="currentUser$ | async" class="editBtn centerText" (click)="editPost(blog.uid)">Edit</div>
+    </div>
+  </div>
+</div>
